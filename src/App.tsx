@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
-import "./styles.css";
-
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend
-} from "chart.js";
+import "./App.css";
+import "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function App() {
   const [cost, setCost] = useState<number | "">("");
@@ -31,9 +23,7 @@ export default function App() {
     if (monthlyRate === 0) return Math.round(principal / numericTenure);
 
     const emiValue =
-      (principal *
-        monthlyRate *
-        Math.pow(1 + monthlyRate, numericTenure)) /
+      (principal * monthlyRate * Math.pow(1 + monthlyRate, numericTenure)) /
       (Math.pow(1 + monthlyRate, numericTenure) - 1);
 
     return Math.round(emiValue);
@@ -50,21 +40,20 @@ export default function App() {
     setEmi(calculateEMI(principal));
   }, [numericCost, numericInterest, numericTenure, downPayment]);
 
-  const totalLoan = numericCost - downPayment;
-  const processingFee = Math.round((totalLoan * numericFee) / 100);
-  const totalInterest = emi * numericTenure - totalLoan;
+  const totalLoan = Math.max(numericCost - downPayment, 0);
+  const processingFee = Math.max(Math.round((totalLoan * numericFee) / 100), 0);
+  const totalInterest = Math.max(emi * numericTenure - totalLoan, 0);
   const totalPayable = totalLoan + totalInterest + processingFee;
 
   const chartData = {
     labels: ["Principal Loan", "Total Interest", "Processing Fee"],
     datasets: [
       {
-        data: [totalLoan, totalInterest, processingFee],
-        backgroundColor: ["#94a3b8", "#64748b", "#cbd5e1"],
+        data: [totalLoan || 1, totalInterest || 1, processingFee || 1],
+        backgroundColor: ["#9ca3af", "#6b7280", "#d1d5db"],
         borderWidth: 0,
-        hoverOffset: 8
-      }
-    ]
+      },
+    ],
   };
 
   const chartOptions = {
@@ -78,12 +67,12 @@ export default function App() {
           boxWidth: 12,
           padding: 12,
           font: {
-            size: 11
-          }
-        }
-      }
+            size: 11,
+          },
+        },
+      },
     },
-    cutout: "72%"
+    cutout: "72%",
   };
 
   return (
@@ -119,7 +108,7 @@ export default function App() {
           <label>Processing Fee (%)</label>
           <input
             type="number"
-            placeholder="Enter fee"
+            placeholder="Enter processing fee"
             value={fee}
             onChange={(e) =>
               setFee(e.target.value === "" ? "" : Number(e.target.value))
@@ -150,7 +139,7 @@ export default function App() {
         <div className="summaryPanel">
           <div className="summaryRow">
             <span>Total Loan Amount</span>
-            <h2>₹{totalLoan > 0 ? totalLoan.toLocaleString() : 0}</h2>
+            <h2>₹{totalLoan.toLocaleString()}</h2>
           </div>
 
           <div className="summaryRow">
@@ -160,17 +149,17 @@ export default function App() {
 
           <div className="summaryRow">
             <span>Total Interest</span>
-            <h2>₹{totalInterest > 0 ? totalInterest.toLocaleString() : 0}</h2>
+            <h2>₹{totalInterest.toLocaleString()}</h2>
           </div>
 
           <div className="summaryRow">
             <span>Processing Fee</span>
-            <h2>₹{processingFee > 0 ? processingFee.toLocaleString() : 0}</h2>
+            <h2>₹{processingFee.toLocaleString()}</h2>
           </div>
 
           <div className="summaryRow totalPayable">
             <span>Total Amount Payable</span>
-            <h2>₹{totalPayable > 0 ? totalPayable.toLocaleString() : 0}</h2>
+            <h2>₹{totalPayable.toLocaleString()}</h2>
           </div>
         </div>
       </div>
