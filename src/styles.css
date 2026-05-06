@@ -1,12 +1,135 @@
-.App {
-  font-family: sans-serif;
-  width:95%;
-  padding:0 15px;
-  display: flex;
-  flex-direction: column;
-  gap:20px;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f3f4f6;
+  color: #1f2937;
 }
 
-.title{
-  font-weight:700;
+.App {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.heading {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #111827;
+}
+
+.card,
+.chartCard,
+.summaryPanel,
+.sliderCard {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.formCard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #4b5563;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  box-sizing: border-box;
+  font-size: 13px;
+  outline: none;
+}
+
+.analyticsSection {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.chartCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chartWrapper {
+  width: 250px;
+  height: 250px;
+}
+
+.summaryPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.summaryRow {
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.summaryRow span {
+  display: block;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.summaryRow h2 {
+  margin: 3px 0 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.totalPayable h2 {
+  color: #2563eb;
+}
+
+.sliderCard label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.slider {
+  width: 100%;
+  accent-color: #6b7280;
+}
+
+@media (max-width: 900px) {
+  .formCard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .analyticsSection {
+    grid-template-columns: 1fr;
+  }
+
+  .chartWrapper {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .formCard {
+    grid-template-columns: 1fr;
+  }
 }
